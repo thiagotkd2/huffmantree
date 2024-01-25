@@ -29,9 +29,15 @@ public class Huffman {
 
         
 
-        while(leitorEntrada.hasNext()) { // lê as linha do arquivo
-            char c = leitorEntrada.next().charAt(0);
-            ContaCaracteres.contaFrequencia(c);
+        while(leitorEntrada.hasNextLine()) { // lê as linha do arquivo
+            
+            String s = leitorEntrada.nextLine();
+            for(char c : s.toCharArray()) {
+            // your code
+                System.out.println(c);    
+                ContaCaracteres.contaFrequencia(c);
+            } 
+            
             
         }
         

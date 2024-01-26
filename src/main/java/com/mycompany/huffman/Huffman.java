@@ -27,21 +27,18 @@ public class Huffman {
 
         File arquivoEntrada = new File(caminhoArquivoEntrada);
         Scanner leitorEntrada = new Scanner(arquivoEntrada);
+        Scanner leitorAlternativo = new Scanner(arquivoEntrada);
         File arquivoSaida = new File("compactado.txt");
         FileWriter writer = new FileWriter(arquivoSaida);
-
-        
 
         while(leitorEntrada.hasNextLine()) { // lê as linha do arquivo
             
             String s = leitorEntrada.nextLine();
             for(char c : s.toCharArray()) {
-            // your code
                 System.out.println(c);    
                 ContaCaracteres.contaFrequencia(c);
-            } 
-            
-            
+            }
+            ContaCaracteres.contaFrequencia('\n');
         }
         
         Map<Character, Integer> mapa = ContaCaracteres.getFrequencia();
@@ -57,7 +54,6 @@ public class Huffman {
             arvores.add(t);
         }
         
-        
         while(arvores.size()>1){
             Arvore t1 = arvores.remove(arvores.indexOf(Collections.min(arvores)));
             Arvore t2 = arvores.remove(arvores.indexOf(Collections.min(arvores)));
@@ -66,9 +62,9 @@ public class Huffman {
             
             Arvore resultado  = t1.fundirArvore(t2);
             System.out.println(resultado.getFreq_arvore());
-            arvores.add(resultado);
-            
+            arvores.add(resultado); 
         }
+        
         System.out.println(arvores.get(0).getFreq_arvore());
         System.out.println(arvores.get(0).getRaiz().getEsq().getFrequencia() +" "+arvores.get(0).getRaiz().getEsq().getLetra());
         System.out.println(valor_freq_total);
@@ -76,13 +72,10 @@ public class Huffman {
         
         Map<Character, String> tabelaSimbolos = new HashMap<Character, String>();
         arvores.getFirst().preencheTabelaSimbolos(arvores.getFirst().getRaiz(), tabelaSimbolos, "");
-        
-        
+         
         for (char key : tabelaSimbolos.keySet()) {
-            System.out.println(key + "  :  " +tabelaSimbolos.get(key));
-            
-            
+            System.out.println(key + "  :  " +tabelaSimbolos.get(key));    
         }
-        
+        Escritor.escrever(writer, tabelaSimbolos,leitorAlternativo, arquivoSaida);
     }
 }

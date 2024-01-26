@@ -205,6 +205,7 @@ public class Arvore implements Comparable<Arvore>{
     // A lógica é esquerda->direita->raiz
     public void preencheTabelaSimbolos(Nodo no, Map tb, String caminho){ // esquerda->direita->raiz
         if (no.isIsFolha()){
+            
             tb.put(no.getLetra(), caminho);
         }else{
         

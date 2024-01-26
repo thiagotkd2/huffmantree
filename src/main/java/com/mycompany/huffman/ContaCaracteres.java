@@ -19,7 +19,9 @@ public  class ContaCaracteres {
     }
     
     public static void contaFrequencia(char c){
-        var count = frequencia.containsKey(c) ? frequencia.get(c) : 0;
+        if (c=='\n'){c='-';} // \n equivale a -         -> ha apenas numeros no arquivo de entrada
+        if (c==(char) 32){c='_';} // espaço equivale a _
+        int count = frequencia.containsKey(c) ? frequencia.get(c) : 0;
         frequencia.put(c, count + 1);
     }
 

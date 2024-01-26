@@ -12,7 +12,7 @@ import java.util.Map;
  * @author Thiago
  */
 public  class ContaCaracteres {
-    private static Map<Character, Integer> frequencia = new HashMap<Character, Integer>();;
+    private static Map<Character, Integer> frequencia = new HashMap<Character, Integer>();
 
     public ContaCaracteres() {
 

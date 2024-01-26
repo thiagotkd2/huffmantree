@@ -1,2 +1,5 @@
+com\mycompany\huffman\Escritor.class
+com\mycompany\huffman\Arvore$Nodo.class
+com\mycompany\huffman\Arvore.class
 com\mycompany\huffman\ContaCaracteres.class
 com\mycompany\huffman\Huffman.class

@@ -4,45 +4,28 @@
  */
 package com.mycompany.huffman;
 
-import java.io.FileWriter;
+
 import java.util.Map;
-import java.util.Stack;
+
 
 /**
  *
- * @author Thiago
+ * @author aluno
  */
 public class Arvore implements Comparable<Arvore>{
-
-    
-
-    @Override
-    public int compareTo(Arvore arvoreDois) {
-        if (this.freq_arvore < arvoreDois.getFreq_arvore()) {
-            return -1;
-        }
-        if (this.freq_arvore >= arvoreDois.getFreq_arvore()) {
-            return 1;
-        }
-        return 0;
-    }
-    
-    
-    /*
- * @author Thiago
- */
-
     // TODO: Refazer arvore de acordo com o algoritmo de huffman
     
-    // definir arvore de acordo com 
+    // definir arvore de acordo com huffman
     class Nodo{
         int frequencia;
         char letra;
         Nodo pai;
         Nodo esq;
         Nodo dir;
-        boolean isFolha;
+        boolean folha;
 
+        
+        // getters do nodo
         public int getFrequencia() {
             return frequencia;
         }
@@ -63,10 +46,11 @@ public class Arvore implements Comparable<Arvore>{
             return dir;
         }
 
-        public boolean isIsFolha() {
-            return isFolha;
+        public boolean isFolha() {
+            return folha;
         }
 
+        // setters do nodo
         public void setFrequencia(int frequencia) {
             this.frequencia = frequencia;
         }
@@ -87,11 +71,9 @@ public class Arvore implements Comparable<Arvore>{
             this.dir = dir;
         }
 
-        public void setIsFolha(boolean isFolha) {
-            this.isFolha = isFolha;
+        public void setFolha(boolean folha) {
+            this.folha = folha;
         }
-        
-        
 
         public Nodo (int freq, Nodo pai, char ch, boolean tipoFolha){
             this.frequencia = freq;
@@ -99,19 +81,15 @@ public class Arvore implements Comparable<Arvore>{
             this.esq = null;
             this.dir = null;   
             this.letra = ch;
-            isFolha = tipoFolha;
+            folha = tipoFolha;
         }
 
     }
     private Nodo raiz;
     private int freq_arvore;
     
-    public void novaArvoreUnitaria(int f, char ch){
-        Nodo n = new Nodo(f, null, ch, true);
-        this.raiz = n;
-        this.freq_arvore = f;
-    }
-
+    
+    // getters e setters da arvore
     public void setRaiz(Nodo raiz) {
         this.raiz = raiz;
     }
@@ -127,15 +105,19 @@ public class Arvore implements Comparable<Arvore>{
     public Nodo getRaiz() {
         return raiz;
     }
-
-    // despois criar métodos
+    
+    public void novaArvoreUnitaria(int f, char ch){
+        Nodo n = new Nodo(f, null, ch, true);
+        this.raiz = n;
+        this.freq_arvore = f;
+    }
+    
     public Arvore fundirArvore(Arvore tree){
         Nodo novaRaiz = new Nodo(0,null,(char)0,false);
         return fundirArvore(tree, novaRaiz);
         
     }
 
-    // redefinir de acordo com huffman
     private Arvore fundirArvore(Arvore arvore, Nodo novaRaiz){
         Arvore tree = new Arvore();
         if(arvore.getFreq_arvore()>this.freq_arvore){ // criterio para organizar a arvore
@@ -155,56 +137,8 @@ public class Arvore implements Comparable<Arvore>{
         return tree;
     }
 
-    /*
-    public void printInOrder(Nodo no){ // esquerda->raiz->direita
-
-        if (no==null){return;}
-
-        Stack<Nodo> pilha = new Stack<>();
-        pilha.push(no);
-        while(!pilha.isEmpty()){
-            Nodo no_impressao = pilha.pop();
-            if(no_impressao.esq!=null){
-                pilha.push(no_impressao.esq);
-            }
-                
-
-            System.out.print(" "+no_impressao.dado);
-
-            if(no_impressao.dir!=null){
-                pilha.push(no_impressao.dir);
-            }
-        }
-        
-
-    }
-
-    // Pre Order : 
-    // A lógica é raiz->esquerda->direita
-    public void printPreOrder(Nodo no, FileWriter w){ //raiz->esquerda->direita
-
-        if (no==null){return;}
-
-        // 
-        System.out.print(" "+no.dado);
-        
-        printPreOrder(no.esq, w);  
-        
-
-    
-        printPreOrder(no.dir, w);
-
-    
-
-    }
-
-
-/*
-    */
-    // Post Order:
-    // A lógica é esquerda->direita->raiz
     public void preencheTabelaSimbolos(Nodo no, Map tb, String caminho){ // esquerda->direita->raiz
-        if (no.isIsFolha()){
+        if (no.isFolha()){
             
             tb.put(no.getLetra(), caminho);
         }else{
@@ -216,47 +150,16 @@ public class Arvore implements Comparable<Arvore>{
     }
     
     
-    
-    
-   /* 
-    public Byte acharCaminho(char c){
-        Nodo n = PostOrderBusca(this.raiz,c);
-        String
-        while(!(n.equals(this.raiz))){
-            if(n.getPai().getEsq().equals(n)){
-                
-            }
+    @Override
+    public int compareTo(Arvore arvoreDois) {
+        if (this.freq_arvore < arvoreDois.getFreq_arvore()) {
+            return -1;
         }
-        
-    }*/
-   /*
-    public void printOutput(){
-         // preorder
-        System.out.print("Pre.:");
-        printPreOrder(raiz);
-        System.out.println();
-      
-        // inorder
-        System.out.print("In..:");
-        printInOrder(raiz);
-        System.out.println();
-        
-        // postorder
-        System.out.print("Post:");
-        printPostOrder(raiz);
-        System.out.println("\n");
+        if (this.freq_arvore >= arvoreDois.getFreq_arvore()) {
+            return 1;
+        }
+        return 0;
     }
-
-    public void buscar(int dado){
-        buscar(dado);
-    }
-    // todo private void buscar(int dado){
-        
-    //}
-    */
+    
     
 }
-
-
-  
-

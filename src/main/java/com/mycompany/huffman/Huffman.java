@@ -27,55 +27,45 @@ public class Huffman {
 
         File arquivoEntrada = new File(caminhoArquivoEntrada);
         Scanner leitorEntrada = new Scanner(arquivoEntrada);
-        Scanner leitorAlternativo = new Scanner(arquivoEntrada);
+        Scanner leitorAlternativo = new Scanner(arquivoEntrada); // leitor usado no final
         File arquivoSaida = new File("compactado.txt");
         FileWriter writer = new FileWriter(arquivoSaida);
 
-        while(leitorEntrada.hasNextLine()) { // lê as linha do arquivo
+        while(leitorEntrada.hasNextLine()) { // lê as linhas do arquivo e conta as frequencias
             
             String s = leitorEntrada.nextLine();
-            for(char c : s.toCharArray()) {
-                System.out.println(c);    
+            for(char c : s.toCharArray()) {    
                 ContaCaracteres.contaFrequencia(c);
             }
             ContaCaracteres.contaFrequencia('\n');
         }
         
-        Map<Character, Integer> mapa = ContaCaracteres.getFrequencia();
-        ArrayList<Arvore> arvores = new ArrayList();
-        int valor_freq_total= 0;
-        for (char key : mapa.keySet()) {
+        Map<Character, Integer> mapa = ContaCaracteres.getFrequencia(); // mapa de frequencias
+        ArrayList<Arvore> arvores = new ArrayList(); // arvores, inicialmente de cada caractere
+        
+        for (char key : mapa.keySet()) { // cria as primeiras arvores
             System.out.println(key + ":" + mapa.get(key));
-            valor_freq_total += mapa.get(key);
+            
             Arvore t = new Arvore();
             t.novaArvoreUnitaria(mapa.get(key), key);
-            System.out.println("Arvore: "+t.getRaiz().getLetra() + " " + t.getRaiz().getFrequencia() + " " + t.getFreq_arvore());
-            System.out.println(t.getRaiz().isIsFolha() + " "+ t.getRaiz().getLetra());
             arvores.add(t);
         }
         
-        while(arvores.size()>1){
+        while(arvores.size()>1){ // junta arvores ate que sobre apenas uma
             Arvore t1 = arvores.remove(arvores.indexOf(Collections.min(arvores)));
             Arvore t2 = arvores.remove(arvores.indexOf(Collections.min(arvores)));
-            System.out.println("Freq arvore 1 : "+t1.getFreq_arvore());
-            System.out.println("Freq arvore 2 : "+t2.getFreq_arvore());
-            
             Arvore resultado  = t1.fundirArvore(t2);
-            System.out.println(resultado.getFreq_arvore());
             arvores.add(resultado); 
         }
-        
-        System.out.println(arvores.get(0).getFreq_arvore());
-        System.out.println(arvores.get(0).getRaiz().getEsq().getFrequencia() +" "+arvores.get(0).getRaiz().getEsq().getLetra());
-        System.out.println(valor_freq_total);
-        System.out.println(arvores.get(0).getFreq_arvore()==valor_freq_total);
-        
+
         Map<Character, String> tabelaSimbolos = new HashMap<Character, String>();
+        // preencher tabela final de simbolos
         arvores.getFirst().preencheTabelaSimbolos(arvores.getFirst().getRaiz(), tabelaSimbolos, "");
          
         for (char key : tabelaSimbolos.keySet()) {
             System.out.println(key + "  :  " +tabelaSimbolos.get(key));    
         }
-        Escritor.escrever(writer, tabelaSimbolos,leitorAlternativo, arquivoSaida);
+        // escreve resultado no output
+        Escritor.escrever(tabelaSimbolos,leitorAlternativo, arquivoSaida);
     }
 }

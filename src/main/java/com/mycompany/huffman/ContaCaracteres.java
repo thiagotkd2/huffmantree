@@ -9,7 +9,7 @@ import java.util.Map;
 
 /**
  *
- * @author Thiago
+ * @author aluno
  */
 public  class ContaCaracteres {
     private static Map<Character, Integer> frequencia = new HashMap<Character, Integer>();

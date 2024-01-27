@@ -26,7 +26,7 @@ public class Escritor {
             for(char c : linha.toCharArray()){
                 if(c=='\n'){c='-';} // \n
                 if(c==(char) 32){c='_';} // espaco
-                out.writeBytes(m.get(c));
+                out.write(Integer.parseInt(m.get(c),2));
             }  
         }
     }

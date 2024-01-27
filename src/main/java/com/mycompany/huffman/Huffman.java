@@ -28,8 +28,10 @@ public class Huffman {
         File arquivoEntrada = new File(caminhoArquivoEntrada);
         Scanner leitorEntrada = new Scanner(arquivoEntrada);
         Scanner leitorAlternativo = new Scanner(arquivoEntrada); // leitor usado no final
-        File arquivoSaida = new File("compactado.txt");
-        FileWriter writer = new FileWriter(arquivoSaida);
+        File arquivoSaida = new File("compactado.bin");
+        FileWriter writer =                     // cria um arquivo vazio
+                new FileWriter(arquivoSaida);  // (evitar append em arquivo ja existente)
+                                    
 
         while(leitorEntrada.hasNextLine()) { // lê as linhas do arquivo e conta as frequencias
             
